@@ -1,0 +1,9 @@
+A) Reproduza a configuração de um projeto Java para a utilização de um driver JDBC, conforme o demonstrado na aula.
+
+B) Reproduza as implementações das definições das classes do modelo de objetos de domínio, da classe FabricaConexao, das classes que modelam os objetos DAO e da classe Main com os exemplos de execução, conforme as demonstrações realizadas em aula.
+
+C) Complemente o projeto Java com as implementações das demais classes do modelo de objetos de domínio apresentado no Diagrama de Classes disponibilizado abaixo (Fonte: Adaptado de Guedes, 2018, l. 190). Se necessário, adapte as implementações das classes de domínio já desenvolvidas.
+
+D) Implemente, utilizando o padrão DAO, as classes necessárias para o mapeamento objeto-relacional e a persistência dos objetos das novas classes de domínio implementadas, bem como dos relacionamentos entre elas. Considere, pelo menos, as seguintes operações: criar, atualizar, remover, recuperar (todos) e recuperar por ID. Se necessário, adapte as implementações das classes DAO já desenvolvidas.
+
+E) Execute testes para validar o funcionamento das operações de persistência no projeto estendido.
