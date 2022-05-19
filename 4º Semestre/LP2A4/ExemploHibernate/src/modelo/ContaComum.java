@@ -13,95 +13,63 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import net.bytebuddy.dynamic.loading.ClassReloadingStrategy.Strategy;
-
-
-@Entity 
-@Table(name = "contasComums")								//nomeia a tabela
-@Inheritance(strategy = InheritanceType.JOINED)				//torna a tabela uma heranca e abre a configuracao para as tabelas das classes filhas
-public class ContaComum {
-
-	@Id														//seta como ID ou PK do banco
+@Entity
+@Table(name = "contascomuns") 							//nomeia a tabela
+@Inheritance(strategy = InheritanceType.JOINED)			//torna a tabela uma heranca e abre a configuracao para as tabelas das classes filhas
+public class ContaComum
+{
+	@Id													//seta como ID ou PK do banco
 	protected long numero;
 	
-	@Column(name = "data_abertura", nullable = false)		//seta o nome e torna NOT NULL
-	@Temporal(TemporalType.TIMESTAMP)						//comfigura o date como um timestamp
+	@Column(name = "data_abertura", nullable = false)	//seta o nome e torna NOT NULL
+	@Temporal(TemporalType.TIMESTAMP)					//comfigura o date como um timestamp
 	protected Date abertura;
 	
-	@Column(name = "data_abertura", nullable = false)		//seta o nome e torna NOT NULL
-	@Temporal(TemporalType.TIMESTAMP)						//comfigura o date como um timestamp
-	
+	@Column(name = "data_fechamento")					//seta o nome e torna NOT NULL
+	@Temporal(TemporalType.TIMESTAMP)					//comfigura o date como um timestamp
 	protected Date fechamento;
+	
 	protected byte situacao;
-	protected int senha;	
+	
+	protected int senha;
+	
 	protected double saldo;
 	
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)				//ao apagar a conta o REMOVE apagas todos seus movimentos vinculados
+	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)	//ao apagar a conta o REMOVE apagas todos seus movimentos vinculados
 	protected Collection<Movimento> movimentos;
-	
 	
 	public ContaComum()
 	{
 		this.situacao = 1;
 		this.saldo = 0.0;
-		this.movimentos = new Collection<Movimento>();
+		this.movimentos = new ArrayList<Movimento>();
 	}
 	
-	public static ContaComum abrirConta() 
-	{	
+	public static ContaComum abrirConta()
+	{
 		long numero = gerarNumeroConta();
-		ContaComum cc = new ContaComum(numero, new Date());
-			
+		ContaComum cc = new ContaComum();
+		cc.setNumero(numero);
+		cc.setAbertura(new Date());
 		return cc;
 	}
-	
 
-	private static long gerarNumeroConta() 
+	private static long gerarNumeroConta()
 	{
 		Random rd = new Random();
 		long numero = rd.nextLong();
-		
-		if(numero<-1){
-			numero = (-1)*(numero+1);
-		}else if(numero == -1){
+		if(numero < -1)
+			numero = (-1)*(numero + 1);
+		else if(numero == -1)
 			numero = 1;
-		}else if(numero ==0) {
+		else if(numero == 0)
 			numero = 1;
-		}	
 		return numero;
 	}
-	
-	public void setNumero(long numero) {
-		this.numero = numero;
-	}
-
-	public void setAbertura(Date abertura) {
-		this.abertura = abertura;
-	}
-
-	
-	public Collection<Movimento> getMovimentos() {
-		return movimentos;
-	}
-
-	public void setMovimentos(Collection<Movimento> movimentos) {
-		this.movimentos = movimentos;
-	}
-
-	public Collection<Pessoa> getTitulares() {
-		return titulares;
-	}
-
-	public void setTitulares(Collection<Pessoa> titulares) {
-		this.titulares = titulares;
-	}
-
-	
 
 	public Date getFechamento() {
 		return fechamento;
@@ -142,6 +110,20 @@ public class ContaComum {
 	public Date getAbertura() {
 		return abertura;
 	}
-	
-	
+
+	public Collection<Movimento> getMovimentos() {
+		return movimentos;
+	}
+
+	public void setMovimentos(Collection<Movimento> movimentos) {
+		this.movimentos = movimentos;
+	}
+
+	public void setNumero(long numero) {
+		this.numero = numero;
+	}
+
+	public void setAbertura(Date abertura) {
+		this.abertura = abertura;
+	}
 }

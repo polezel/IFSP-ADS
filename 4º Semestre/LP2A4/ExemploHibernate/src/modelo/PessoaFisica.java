@@ -9,15 +9,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity 
-@Table(name = "pessoasFisicas")								//nomeia a tabela
-@PrimaryKeyJoinColumn(name = "id")							//linka a tabela mae com a tabela filha com base na chave ID
-public class PessoaFisica extends Pessoa
+@Entity
+@Table(name = "pessoasfisicas")					//nomeia a tabela
+@PrimaryKeyJoinColumn(name = "id")				//linka a tabela mae com a tabela filha com base na chave ID
+public class PessoaFisica extends Pessoa	
 {
-	@Column(nullable = false)								//seta como NOT NULL
+	@Column(nullable = false)					//seta como NOT NULL
 	private long cpf;
-	
-	@Temporal(TemporalType.DATE)							//seta o template utilizado para o DATE
+		
+	@Temporal(TemporalType.DATE)				//seta o template utilizado para o DATE
 	private Date nascto;
 	
 	public long getCpf()
