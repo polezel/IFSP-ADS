@@ -1,0 +1,28 @@
+{
+  "name": "a4-electron",
+  "version": "1.0.0",
+  "description": "Aplicação Electron da Atividade 4",
+  "main": "main.js",
+  "author": "Mateus",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^18.2.3",
+    "electron-builder": "22.10.5"
+  },
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+
+  "build": {
+    "win": {
+      "target": "portable"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "postinstall": "electron-builder install-app-deps"
+  
+}
