@@ -1,0 +1,103 @@
+TAREFA PRATICA 1
+
+Testar os modos 
+NAT
+Bridge
+
+
+
+
+Utilizar IP privado
+Máscara de Sub-rede 255.25.255.0
+
+
+FAZER ESSES COMANDOS EM CADA MÁQUINA
+
+configurar ip
+
+	ifconfig eth0 192.168.0.NUMEROQUEQUISER netmask 255.255.255.0
+
+liberar as portas
+
+	iptables -A OUTPUT -p icmp -s 0.0.0.0/0 -d 0.0.0.0/0 -j ACCEPT
+	iptables -A INPUT -p icmp -s 0.0.0.0/0 -d 0.0.0.0/0 -j ACCEPT
+
+fazer o ping
+
+	ping <ip da outra maquina>
+
+-------------------------------------------------------------------------------------------------------
+seus ip's devem ser diferentes, mas a máscara é a mesmas
+
+
+
+TAREFA PRATICA 2
+
+fazer cliente e servidor DHCP
+	1- maquina 1 em modo bridge
+	2 - comando yum update (atualiza pacotes)
+	3- SE deu erro, leva nota 0 (isc.org/download/#DHCP       ...EU ACHO)
+
+
+iptables -F para liberar o firewall nas vm's
+
+
+
+
+
+
+https://vswitchzero.com/2018/03/05/configuring-a-proxy-in-photon-os/
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*****TRECHO DA AA5********
+
+A REDE TEM QUE SER MODO BRIDGE
+
+Acesse o arquivo proxy:
+/etc/sysconfig/proxy
+
+Ligue o proxy:
+PROXY_ENABLED="yes"
+
+Mude os  HTTP do proxy:
+HTTP_PROXY="http://proxy do navegador, vê lá:porta do proxy do navegador, vê lá"
+(exemplo: http://10.100.1.253:3128)
+
+Reiniciar:
+systemctl restart systemd-networkd
+
+DESLIQUE E LIGUE A MÁQUINA
+
+
+Atualize o yum:
+yum update
+(y e enter, quando ele perguntar se está ok)
+
+Baixe o dhcp-server:
+yum install dhcp-server
+(y e enter, quando ele perguntar se está ok)
+
+
+
+# dhcpd.conf
+#
+# Configuration file for ISC dhcpd (see 'man dhcpd.conf')
+#
+authoritative;
+#Domínio configurado no BIND
+#option domain-name "seudominio.com.br";
+default-lease-time 600; #controla o tempo de renovação do IP
+max-lease-time 7200; #determina o tempo que cada máquina pode usar um determinado IP. 
+
+subnet 192.168.1.0 netmask 255.255.255.0 { #Define sua "sub-rede" 192.168.1.0 com a máscara 255.255.255.0 
+     range 192.168.1.101 192.168.1.200;  #faixa de IPs que o cliente pode usar.
+     option routers 192.168.1.100; #Este é o gateway padrão (neste caso).
+     option broadcast-address 192.168.1.255; #Essa linha é o endereço de broadcast (neste caso).
+
+#Aqui você coloca os servidores DNS de terceiros ou seu DNS próprio configurado no BIND. Nesse caso coloquei o DNS do Google.
+     option domain-name-servers 8.8.8.8; 
+     option domain-name-servers  8.8.4.4;
+
+
+
